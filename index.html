@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="index.css">
+	<script src="index.js"></script>
+	<title>Найди пару</title>
+</head>
+<body>
+	<h1 class="center-text">Игра: найди пару цветов</h1>
+	<hr>
+	<h3 id="clickAmount" class="center-text">Количество открытий: 0</h3>
+	<h3 id="winReport" class="center-text">Игра закончена</h3>
+  <div class="game-field">
+      <div><div></div></div>
+      <div><div></div></div>
+      <div><div></div></div>
+      <div><div></div></div>
+      <div><div></div></div>
+      <div><div></div></div>
+      <div><div></div></div>
+      <div><div></div></div>
+      <div><div></div></div>
+      <div><div></div></div>
+      <div><div></div></div>
+      <div><div></div></div>
+      <div><div></div></div>
+      <div><div></div></div>
+      <div><div></div></div>
+      <div><div></div></div>
+  </div>
+	<div class="center-text">
+	  <button id="restartGameButton">Начать сначала</button>
+  </div>
+
+	<script>
+		function startGame() {
+	    	winReport.style.visibility = "hidden";
+	    	amountOfFoundPairs = 0;
+	    	clickCounter = 0;
+	    	clickAmount.innerHTML = 'Количество открытий: ' + clickCounter;
+	    	mixCodes();
+	    
+	    	//Присваиваиваем блокам цвета и скрываем их 
+			for(let i = 0; i < innerBlock.length; i++) {
+				innerBlock[i].className = "";
+  				innerBlock[i].className = "color-" + codes[i];
+  	   		innerBlock[i].style.visibility = 'hidden';
+  				outerBlock[i].onclick = clickHandler;
+		 	};
+		};
+	  
+		//Мешает массив codes
+		function mixCodes() {
+			codes.sort(compareRandom);
+			
+			function compareRandom(a, b) {
+				return Math.random() - 0.5;
+			};
+		};
+		
+		//Прячет последние два цвета
+		function hideTwoLastColors() {
+			isTimeOut = false;
+			currentColor.style.visibility = 'hidden'; 
+			lastColor.style.visibility = 'hidden';
+		};
+		
+		function clickHandler() {
+		  //Проверка успела ли сработать функция hideTwoLastColors
+			if (isTimeOut) {
+		   	clearTimeout(timerId);
+		   	hideTwoLastColors();
+			};
+		  
+			clickCounter += 1;
+			clickAmount.innerHTML = 'Количество открытий: ' + clickCounter; 
+      
+      	currentColor = this.querySelector('div');
+			currentColor.style.visibility = '';
+		  
+		  
+			if (clickCounter % 2 == 1) { //если открываем первый цвет
+		   	lastColor = currentColor;
+		   	this.onclick = "";
+			
+			} else { //если открываем второй цвет
+		   	
+		   	//если не совпал с первым цветом
+		   	if (lastColor.className != currentColor.className) { 
+		      	isTimeOut = true;
+		      	timerId = setTimeout(hideTwoLastColors, 600);
+		      	lastColor.parentElement.onclick = clickHandler;
+		   	} else { //если совпал с первым цветом
+		      	lastColor.parentElement.onclick = "";
+		      	this.onclick = "";
+		      	lastColor = "";
+		      	amountOfFoundPairs += 1
+		      	
+		      	//если открыли все пары цветов
+		      	if (amountOfFoundPairs == 8) {
+		        		winReport.style.visibility = "visible";
+		      	};
+		    	};
+		  	};
+		};
+		
+		let lastColor = "";
+		let currentColor = "";
+		let clickCounter = 0;
+		let isTimeOut = false;
+		let timerId = 0;
+		let amountOfFoundPairs = 0;
+		let codes = [1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8]; //Коды для дальнейшего присвания блокам
+		let outerBlock = document.querySelectorAll(".game-field > div");
+		let innerBlock = document.querySelectorAll(".game-field div div");//Собираем блоки в коллекцию
+    	
+    	restartGameButton.onclick = startGame;
+		
+		startGame();
+	</script>
+</body>
+</html>
