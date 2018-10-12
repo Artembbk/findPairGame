@@ -34,19 +34,19 @@
   	</div>
 	<script>
 		function startGame() {
-	    	winReport.style.visibility = "hidden";
-	    	amountOfFoundPairs = 0;
-	    	clickCounter = 0;
-	    	clickAmount.innerHTML = 'Количество открытий: ' + clickCounter;
-	    	mixCodes();
+	   	winReport.style.visibility = "hidden";
+	   	amountOfFoundPairs = 0;
+	   	clickCounter = 0;
+	   	clickAmount.innerHTML = 'Количество открытий: ' + clickCounter;
+	   	mixCodes();
 
-	    	//Присваиваиваем блокам цвета и скрываем их
+			//Присваиваиваем блокам цвета и скрываем их
 			for(let i = 0; i < innerBlock.length; i++) {
 				innerBlock[i].className = "";
-  				innerBlock[i].className = "color-" + codes[i];
-  	   		innerBlock[i].style.visibility = 'hidden';
-  				outerBlock[i].onclick = clickHandler;
-		 	};
+	  			innerBlock[i].className = "color-" + codes[i];
+	  	   	innerBlock[i].style.visibility = 'hidden';
+	  			outerBlock[i].onclick = clickHandler;
+			};
 		};
 
 		//Мешает массив codes
@@ -66,7 +66,7 @@
 		};
 
 		function clickHandler() {
-		  //Проверка успела ли сработать функция hideTwoLastColors
+			//Проверка успела ли сработать функция hideTwoLastColors
 			if (isTimeOut) {
 		   	clearTimeout(timerId);
 		   	hideTwoLastColors();
@@ -87,19 +87,19 @@
 
 		   	//если не совпал с первым цветом
 		   	if (lastColor.className != currentColor.className) {
-		      	isTimeOut = true;
-		      	timerId = setTimeout(hideTwoLastColors, 600);
-		      	lastColor.parentElement.onclick = clickHandler;
+		   	  	isTimeOut = true;
+		   	  	timerId = setTimeout(hideTwoLastColors, 600);
+		   	  	lastColor.parentElement.onclick = clickHandler;
 		   	} else { //если совпал с первым цветом
-		      	lastColor.parentElement.onclick = "";
-		      	this.onclick = "";
-		      	lastColor = "";
-		      	amountOfFoundPairs += 1
+		     		lastColor.parentElement.onclick = "";
+		     		this.onclick = "";
+		    	 	lastColor = "";
+		   	  	amountOfFoundPairs += 1
 
-		      	//если открыли все пары цветов
-		      	if (amountOfFoundPairs == 8) {
-		        		winReport.style.visibility = "visible";
-		      	};
+		  	   	//если открыли все пары цветов
+		 	    	if (amountOfFoundPairs == 8) {
+			     		winReport.style.visibility = "visible";
+		     		};
 		    	};
 		  	};
 		};
