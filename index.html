@@ -3,15 +3,22 @@
 <head>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="index.css">
-	<script src="index.js"></script>
 	<title>Найди пару</title>
 </head>
 <body>
-	<h1 class="center-text">Игра: найди пару цветов</h1>
+	<h1 class="center">Игра: найди пару цветов</h1>
 	<hr>
-	<h3 id="clickAmount" class="center-text">Количество открытий: 0</h3>
-	<h3 id="winReport" class="center-text">Игра закончена</h3>
-	<div class="game-field">
+
+	<div class="start-page-form center">
+		<form onsubmit="formHandler()">
+			Размер поля: <input type="number" name="fieldSize" value="4" min="2" max="8"><br>
+			<input type="submit" name="enter" value="Начать">
+		</form>
+	</div>
+
+	<h3 id="clickAmount" class="center hideElem">Количество открытий: 0</h3>
+	<h3 id="winReport" class="center hideElem">Игра закончена</h3>
+	<div class="game-field hideElem">
 	   <div><div></div></div>
 	   <div><div></div></div>
 	   <div><div></div></div>
@@ -29,10 +36,15 @@
 	   <div><div></div></div>
 		<div><div></div></div>
 	</div>
-	<div class="center-text">
+	<div class="center hideElem">
 	  <button id="restartGameButton">Начать сначала</button>
   	</div>
 	<script>
+		function formHandler() {
+			let fieldSize = document.getElementsByName("fieldSize")[0].value;
+		}
+
+
 		function startGame() {
 	   	winReport.style.visibility = "hidden";
 	   	amountOfFoundPairs = 0;
