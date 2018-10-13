@@ -9,40 +9,43 @@
 	<h1 class="center">Игра: найди пару цветов</h1>
 	<hr>
 
-	<div class="start-page-form center">
-		<form onsubmit="formHandler()">
-			Размер поля: <input type="number" name="fieldSize" value="4" min="2" max="8"><br>
-			<input type="submit" name="enter" value="Начать">
-		</form>
+	<div class="start-page-form center" id="startForm">
+			Размер поля: <input type="number" name="fieldSize" value="4" min="2" max="8" ><br>
+			<input type="submit" name="enter" value="Начать" onclick="formHandler()">
 	</div>
 
-	<h3 id="clickAmount" class="center hideElem">Количество открытий: 0</h3>
-	<h3 id="winReport" class="center hideElem">Игра закончена</h3>
-	<div class="game-field hideElem">
-	   <div><div></div></div>
-	   <div><div></div></div>
-	   <div><div></div></div>
-	   <div><div></div></div>
-	   <div><div></div></div>
-	   <div><div></div></div>
-	   <div><div></div></div>
-	   <div><div></div></div>
-	   <div><div></div></div>
-	   <div><div></div></div>
-	   <div><div></div></div>
-	   <div><div></div></div>
-	   <div><div></div></div>
-	   <div><div></div></div>
-	   <div><div></div></div>
-		<div><div></div></div>
-	</div>
-	<div class="center hideElem">
-	  <button id="restartGameButton">Начать сначала</button>
+	<h3 id="clickAmount" class="center">Количество открытий: 0</h3>
+	<h3 id="winReport" class="center">Игра закончена</h3>
+
+	<div class="game-field" id="gameField"></div>
+
+	<div class="center" id="restartGameButton">
+	  <button>Начать сначала</button>
   	</div>
 	<script>
+		function showGameField() {
+			startForm.style.visibility = "hidden";
+
+			clickAmount.style.visibility = "";
+			gameField.style.visibility = "";
+			restartGameButton.style.visibility = "";
+		}
+
 		function formHandler() {
 			let fieldSize = document.getElementsByName("fieldSize")[0].value;
-		}
+			let innerDivs = document.createDocumentFragment();
+			let elem = document.createElement('div');
+			let inElem = document.createElement('div');
+			let divInDiv = elem.appendChild(inElem);
+
+			for (var i = 0; i < fieldSize*fieldSize; i++) {
+				innerDivs.appendChild(divInDiv);
+			};
+
+			gameField.appendChild(innerDivs);
+			showGameField();
+		};
+
 
 
 		function startGame() {
@@ -126,9 +129,13 @@
 		let outerBlock = document.querySelectorAll(".game-field > div");
 		let innerBlock = document.querySelectorAll(".game-field div div");//Собираем блоки в коллекцию
 
+		let restartGameButton = document.querySelector("#restartGameButton > button")
+
 		restartGameButton.onclick = startGame;
 
-		startGame();
+		clickAmount.style.visibility = "hidden";
+		gameField.style.visibility = "hidden";
+		restartGameButton.style.visibility = "hidden";
 	</script>
 </body>
 </html>
