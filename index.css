@@ -14,14 +14,14 @@
 }
 
 .game-field {
-    width: 408px;
+    width: 400px;
     margin: 0 auto;
     overflow: hidden;
 }
 
 .game-field div {
-    width: 100px;
-    height: 100px;
+    width: 98px;
+    height: 98px;
     border: 1px solid #ccc;
     cursor: pointer;
     float: left;

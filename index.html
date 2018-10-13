@@ -24,7 +24,11 @@
   	</div>
 	<script>
 		function showGameField() {
-			startForm.style.visibility = "hidden";
+			outerBlock = document.querySelectorAll(".game-field > div");
+			innerBlock = document.querySelectorAll(".game-field div div");//Собираем блоки в коллекцию
+			gameField.style.width = fieldSize*100 + "px";
+
+			startForm.style.display = "none";
 
 			clickAmount.style.visibility = "";
 			gameField.style.visibility = "";
@@ -32,18 +36,14 @@
 		}
 
 		function formHandler() {
-			let fieldSize = document.getElementsByName("fieldSize")[0].value;
-			let innerDivs = document.createDocumentFragment();
-			let elem = document.createElement('div');
-			let inElem = document.createElement('div');
-			let divInDiv = elem.appendChild(inElem);
+			fieldSize = document.getElementsByName("fieldSize")[0].value;
 
 			for (var i = 0; i < fieldSize*fieldSize; i++) {
-				innerDivs.appendChild(divInDiv);
+				gameField.insertAdjacentHTML("afterBegin", "<div><div></div></div>");
 			};
 
-			gameField.appendChild(innerDivs);
 			showGameField();
+			startGame();
 		};
 
 
@@ -126,9 +126,9 @@
 		let timerId = 0;
 		let amountOfFoundPairs = 0;
 		let codes = [1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8]; //Коды для дальнейшего присвания блокам
-		let outerBlock = document.querySelectorAll(".game-field > div");
-		let innerBlock = document.querySelectorAll(".game-field div div");//Собираем блоки в коллекцию
-
+		let outerBlock;
+		let innerBlock;
+		let fieldSize;
 		let restartGameButton = document.querySelector("#restartGameButton > button")
 
 		restartGameButton.onclick = startGame;
