@@ -3,42 +3,75 @@
 <head>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="index.css">
-	<script src="index.js"></script>
+	<link rel="stylesheet" href="colors.css">
 	<title>Найди пару</title>
 </head>
 <body>
-	<h1 class="center-text">Игра: найди пару цветов</h1>
+	<h1 class="center">Игра: найди пару цветов</h1>
 	<hr>
-	<h3 id="clickAmount" class="center-text">Количество открытий: 0</h3>
-	<h3 id="winReport" class="center-text">Игра закончена</h3>
-	<div class="game-field">
-	   <div><div></div></div>
-	   <div><div></div></div>
-	   <div><div></div></div>
-	   <div><div></div></div>
-	   <div><div></div></div>
-	   <div><div></div></div>
-	   <div><div></div></div>
-	   <div><div></div></div>
-	   <div><div></div></div>
-	   <div><div></div></div>
-	   <div><div></div></div>
-	   <div><div></div></div>
-	   <div><div></div></div>
-	   <div><div></div></div>
-	   <div><div></div></div>
-		<div><div></div></div>
+
+	<div class="start-page-form center" id="startForm">
+			Размер поля:<br>
+			<div>
+				<input type="radio" name="fieldSize">2x2<br>
+				<input type="radio" name="fieldSize" checked>4x4<br>
+				<input type="radio" name="fieldSize">6x6<br>
+				<input type="radio" name="fieldSize">8x8<br>
+			</div>
+			<input type="submit" name="enter" value="Начать" onclick="formHandler()">
 	</div>
-	<div class="center-text">
-	  <button id="restartGameButton">Начать сначала</button>
+
+	<h3 id="clickAmount" class="center">Количество открытий: 0</h3>
+	<h3 id="winReport" class="center">Игра закончена</h3>
+
+	<div class="game-field" id="gameField"></div>
+
+	<div class="center" id="restartGameButton">
+	  <button>Начать сначала</button>
   	</div>
 	<script>
+		function showGameField() {
+			outerBlock = document.querySelectorAll(".game-field > div");
+			innerBlock = document.querySelectorAll(".game-field div div");//Собираем блоки в коллекцию
+			gameField.style.width = fieldSize*100 + "px";
+
+			startForm.style.display = "none";
+
+			clickAmount.style.visibility = "";
+			gameField.style.visibility = "";
+			restartGameButton.style.visibility = "";
+		}
+
+		function formHandler() {
+			let inputs = document.querySelectorAll("#startForm div input")
+			for (let i = 0; i < inputs.length; i++) {
+				if (inputs[i].checked) {
+					fieldSize = (i + 1) * 2;
+				}
+			}
+
+
+			for (var i = 0; i < fieldSize*fieldSize; i++) {
+				gameField.insertAdjacentHTML("afterBegin", "<div><div></div></div>");
+			};
+
+			showGameField();
+			startGame();
+		};
+
+
+
 		function startGame() {
 	   	winReport.style.visibility = "hidden";
 	   	amountOfFoundPairs = 0;
 	   	clickCounter = 0;
 	   	clickAmount.innerHTML = 'Количество открытий: ' + clickCounter;
-	   	mixCodes();
+
+			for (let i = 1; i <= fieldSize * fieldSize / 2; i++) {
+				codes.push(i);
+				codes.push(i);
+			}
+			mixCodes();
 
 			//Присваиваиваем блокам цвета и скрываем их
 			for(let i = 0; i < innerBlock.length; i++) {
@@ -110,13 +143,17 @@
 		let isTimeOut = false;
 		let timerId = 0;
 		let amountOfFoundPairs = 0;
-		let codes = [1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8]; //Коды для дальнейшего присвания блокам
-		let outerBlock = document.querySelectorAll(".game-field > div");
-		let innerBlock = document.querySelectorAll(".game-field div div");//Собираем блоки в коллекцию
+		let codes = []; //Коды для дальнейшего присвания блокам
+		let outerBlock;
+		let innerBlock;
+		let fieldSize;
+		let restartGameButton = document.querySelector("#restartGameButton > button")
 
 		restartGameButton.onclick = startGame;
 
-		startGame();
+		clickAmount.style.visibility = "hidden";
+		gameField.style.visibility = "hidden";
+		restartGameButton.style.visibility = "hidden";
 	</script>
 </body>
 </html>

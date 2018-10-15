@@ -8,52 +8,32 @@
   visibility: hidden;
 }
 
-.center-text {
-  text-align: center;
+.center {
+   text-align: center;
+   margin: 0 auto;
 }
 
 .game-field {
-    width: 408px;
+    width: 400px;
     margin: 0 auto;
     overflow: hidden;
 }
 
 .game-field div {
-    width: 100px;
-    height: 100px;
+    width: 98px;
+    height: 98px;
     border: 1px solid #ccc;
     cursor: pointer;
     float: left;
 }
 
-.color-1 {
-  background: #FF033E;
+.start-page-form {
+   border: 1px solid #ccc;
+   height: 200px;
+   width: 200px
 }
 
-.color-2 {
-  background: #44944A;
-}
-
-.color-3 {
-  background: #6A5ACD;
-}
-
-.color-4 {
-  background: #F984E5;
-}
-
-.color-5 {
-  background: #FFCF40;
-}
-
-.color-6 {
-  background: #5E2129;
-}
-
-.color-7 {
-  background: #42AAFF;
-}
-
-.color-8 {
-  background: #CC5500;
+input {
+   margin-top: 5px;
+   margin-bottom: 5px;
 }
