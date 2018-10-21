@@ -4,12 +4,13 @@
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="index.css">
 	<link rel="stylesheet" href="colors.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 	<title>Найди пару</title>
 </head>
 <body>
 	<h1 class="center">Игра: найди пару цветов</h1>
 	<hr>
-
+	<i class="fas fa-home fa-2x" id="homeButton"></i>
 	<div class="start-page-form center" id="startForm">
 			Размер поля:<br>
 			<div>
@@ -30,6 +31,22 @@
 	  <button>Начать сначала</button>
   	</div>
 	<script>
+		function backStartPage() {
+			clickAmount.style.visibility = "hidden";
+			gameField.style.visibility = "hidden";
+			restartGameButton.style.visibility = "hidden";
+			homeButton.style.visibility = "hidden";
+
+			startForm.style.display = "";
+
+			codes = [];
+
+			for (var i = 0; i < outerBlock.length; i++) {
+				outerBlock[i].remove();
+			}
+		}
+
+
 		// Вызов следующей функции убирает стартовую страницу(где выбор размера) и
 		// показывет игровое поле. Также здесь собираются в списки внешние
 		// и внутренние div и присваивается ширина для поля.
@@ -43,6 +60,7 @@
 			clickAmount.style.visibility = "";
 			gameField.style.visibility = "";
 			restartGameButton.style.visibility = "";
+			homeButton.style.visibility = "";
 		}
 
 		// Эта функция обрабатывает форму на стартовой странице(выбор размера и тд).
@@ -50,12 +68,12 @@
 		// создает игровое поле и начинает игру.
 		// Здесь вызываются функции showGameField и startGame
 		function formHandler() {
-			let inputs = document.querySelectorAll("#startForm div input")
+			let inputs = document.querySelectorAll("#startForm div input");
 			for (let i = 0; i < inputs.length; i++) {
 				if (inputs[i].checked) {
 					fieldSize = (i + 1) * 2;
-				}
-			}
+				};
+			};
 
 
 			for (var i = 0; i < fieldSize*fieldSize; i++) {
@@ -65,7 +83,7 @@
 			for (let i = 1; i <= fieldSize * fieldSize / 2; i++) {
 				codes.push(i);
 				codes.push(i);
-			}
+			};
 
 			showGameField();
 			startGame();
@@ -171,11 +189,13 @@
 		let fieldSize;//Длина стороны поля
 
 		restartGameButton.onclick = startGame;
+		homeButton.onclick = backStartPage;
 
 		//Прячем поле, счетчик кликов и кнопку рестарта игры
 		clickAmount.style.visibility = "hidden";
 		gameField.style.visibility = "hidden";
 		restartGameButton.style.visibility = "hidden";
+		homeButton.style.visibility = "hidden";
 	</script>
 </body>
 </html>

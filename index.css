@@ -8,6 +8,11 @@
   visibility: hidden;
 }
 
+#homeButton {
+   border: 1px solid black;
+   padding: 4px;
+}
+
 .center {
    text-align: center;
    margin: 0 auto;
@@ -32,6 +37,8 @@
    height: 200px;
    width: 200px
 }
+
+
 
 input {
    margin-top: 5px;
