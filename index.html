@@ -30,6 +30,9 @@
 	  <button>Начать сначала</button>
   	</div>
 	<script>
+		// Вызов следующей функции убирает стартовую страницу(где выбор размера) и
+		// показывет игровое поле. Также здесь собираются в списки внешние
+		// и внутренние div и присваивается ширина для поля.
 		function showGameField() {
 			outerBlock = document.querySelectorAll(".game-field > div");
 			innerBlock = document.querySelectorAll(".game-field div div");//Собираем блоки в коллекцию
@@ -42,6 +45,10 @@
 			restartGameButton.style.visibility = "";
 		}
 
+		// Эта функция обрабатывает форму на стартовой странице(выбор размера и тд).
+		// Функия берет значения, выбранные пользователем и в соответствие с ними
+		// создает игровое поле и начинает игру.
+		// Здесь вызываются функции showGameField и startGame
 		function formHandler() {
 			let inputs = document.querySelectorAll("#startForm div input")
 			for (let i = 0; i < inputs.length; i++) {
@@ -60,9 +67,11 @@
 		};
 
 
-
+		// Функция начинающая или сбрасывающая игру. Она присваивает различные цвета клеткам
+		// и сразу же скрывает их. Также она сбрасывает значение clickCounter amountOfFoundPairs и
+		// скрывает сообщение о победе winReport.
 		function startGame() {
-	   	winReport.style.visibility = "hidden";
+	  		winReport.style.visibility = "hidden";
 	   	amountOfFoundPairs = 0;
 	   	clickCounter = 0;
 	   	clickAmount.innerHTML = 'Количество открытий: ' + clickCounter;
@@ -98,8 +107,12 @@
 			lastColor.style.visibility = 'hidden';
 		};
 
+		// Функция-обработчик клика по клетке.
 		function clickHandler() {
 			//Проверка успела ли сработать функция hideTwoLastColors
+			// Нужна для того, чтобы если пользователь кликнул на клетку, до того как
+			// скрылись две открытые им клетки до этого, они сразу же скрывались и
+			// не происходили какие-либо нестыковки.
 			if (isTimeOut) {
 		   	clearTimeout(timerId);
 		   	hideTwoLastColors();
@@ -108,28 +121,37 @@
 			clickCounter += 1;
 			clickAmount.innerHTML = 'Количество открытий: ' + clickCounter;
 
+			//Показывается цвет клетки, на которую нажал пользователь, а также
+			//записывается в переменную
 			currentColor = this.querySelector('div');
 			currentColor.style.visibility = '';
 
-
-			if (clickCounter % 2 == 1) { //если открываем первый цвет
+			//Если открываем первый цвет, то он также записывается в переменную
+			//с последним цветом, а клетка с ним перестает вызывать функцию-обработчик клика
+			if (clickCounter % 2 == 1) {
 		   	lastColor = currentColor;
 		   	this.onclick = "";
 
-			} else { //если открываем второй цвет
+			//Если открываем второй цвет то проверяем совпал ли он с первым
+			} else {
 
-		   	//если не совпал с первым цветом
+		   	//Если не совпал с первым цветом, то с задержкой вызываем
+				// функцию hideTwoLastColors, которая скроет эти две клетки.
+				// Также делаем первую клеткю снова активной для клика
 		   	if (lastColor.className != currentColor.className) {
 		   	  	isTimeOut = true;
 		   	  	timerId = setTimeout(hideTwoLastColors, 600);
 		   	  	lastColor.parentElement.onclick = clickHandler;
-		   	} else { //если совпал с первым цветом
+
+				//Если совпал с первым цветом, то делаем клекти неактивными и
+				// увеличиваем кол-во найденных пар на 1
+		   	} else {
 		     		lastColor.parentElement.onclick = "";
 		     		this.onclick = "";
 		    	 	lastColor = "";
 		   	  	amountOfFoundPairs += 1
 
-		  	   	//если открыли все пары цветов
+		  	   	//Если открыли все пары цветов
 		 	    	if (amountOfFoundPairs == 8) {
 			     		winReport.style.visibility = "visible";
 		     		};
@@ -146,11 +168,12 @@
 		let codes = []; //Коды для дальнейшего присвания блокам
 		let outerBlock;
 		let innerBlock;
-		let fieldSize;
+		let fieldSize;//Длина стороны поля
 		let restartGameButton = document.querySelector("#restartGameButton > button")
 
 		restartGameButton.onclick = startGame;
 
+		//Прячем поле, счетчик кликов и кнопку рестарта игры
 		clickAmount.style.visibility = "hidden";
 		gameField.style.visibility = "hidden";
 		restartGameButton.style.visibility = "hidden";
