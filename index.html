@@ -62,6 +62,11 @@
 				gameField.insertAdjacentHTML("afterBegin", "<div><div></div></div>");
 			};
 
+			for (let i = 1; i <= fieldSize * fieldSize / 2; i++) {
+				codes.push(i);
+				codes.push(i);
+			}
+
 			showGameField();
 			startGame();
 		};
@@ -76,10 +81,6 @@
 	   	clickCounter = 0;
 	   	clickAmount.innerHTML = 'Количество открытий: ' + clickCounter;
 
-			for (let i = 1; i <= fieldSize * fieldSize / 2; i++) {
-				codes.push(i);
-				codes.push(i);
-			}
 			mixCodes();
 
 			//Присваиваиваем блокам цвета и скрываем их
@@ -148,7 +149,6 @@
 		   	} else {
 		     		lastColor.parentElement.onclick = "";
 		     		this.onclick = "";
-		    	 	lastColor = "";
 		   	  	amountOfFoundPairs += 1
 
 		  	   	//Если открыли все пары цветов
@@ -169,7 +169,6 @@
 		let outerBlock;
 		let innerBlock;
 		let fieldSize;//Длина стороны поля
-		let restartGameButton = document.querySelector("#restartGameButton > button")
 
 		restartGameButton.onclick = startGame;
 
