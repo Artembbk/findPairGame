@@ -14,7 +14,6 @@
 	<div class="start-page-form center" id="startForm">
 			Размер поля:<br>
 			<div>
-				<input type="radio" name="fieldSize">2x2<br>
 				<input type="radio" name="fieldSize" checked>4x4<br>
 				<input type="radio" name="fieldSize">6x6<br>
 				<input type="radio" name="fieldSize">8x8<br>
@@ -71,7 +70,7 @@
 			let inputs = document.querySelectorAll("#startForm div input");
 			for (let i = 0; i < inputs.length; i++) {
 				if (inputs[i].checked) {
-					fieldSize = (i + 1) * 2;
+					fieldSize = (i + 2) * 2;
 				};
 			};
 

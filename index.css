@@ -11,6 +11,7 @@
 #homeButton {
    border: 1px solid black;
    padding: 4px;
+   float: left;
 }
 
 .center {
